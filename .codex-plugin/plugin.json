@@ -1,6 +1,6 @@
 {
   "name": "codex-frontend-plugin",
-  "version": "0.3.3",
+  "version": "0.3.4",
   "description": "Anti-cheat visual frontend feedback loop for Codex-built UIs.",
   "author": {
     "name": "sifly"

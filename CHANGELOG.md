@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.4 - 2026-06-04
+
+- Fixed the split release workflow publish job by passing the repository explicitly to `gh release create`.
+
 ## 0.3.3 - 2026-06-04
 
 - Fixed the advisory hook so it does not statically import Playwright-dependent modules from the plugin cache.
