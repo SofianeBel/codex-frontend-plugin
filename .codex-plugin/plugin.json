@@ -1,0 +1,32 @@
+{
+  "name": "codex-frontend-plugin",
+  "version": "0.2.0",
+  "description": "Anti-cheat visual frontend feedback loop for Codex-built UIs.",
+  "author": {
+    "name": "sifly"
+  },
+  "keywords": [
+    "codex",
+    "frontend",
+    "visual-testing",
+    "playwright",
+    "pixelmatch"
+  ],
+  "skills": "./skills/",
+  "interface": {
+    "displayName": "Codex Frontend Visual",
+    "shortDescription": "Build real UIs from mockups with anti-cheat visual feedback.",
+    "longDescription": "Adds a frontend mockup skill and local visual-check tooling so Codex must pass anti-cheat, asset, DOM, interaction, responsive, and accessibility validation before comparing a generated UI screenshot against a reference mockup.",
+    "developerName": "sifly",
+    "category": "Developer Tools",
+    "capabilities": [
+      "Interactive",
+      "Write"
+    ],
+    "defaultPrompt": [
+      "Use the frontend-mockup skill to implement this mockup as a real semantic UI, then run npm run visual:check and iterate on the visual report.",
+      "Capture and compare the current frontend against .visual-references/home.png.",
+      "Explain the anti-cheat visual report and propose the smallest UI changes to pass every gate."
+    ]
+  }
+}

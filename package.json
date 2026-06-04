@@ -1,0 +1,54 @@
+{
+  "name": "codex-frontend-plugin",
+  "version": "0.2.0",
+  "description": "Codex plugin prototype for anti-cheat visual frontend implementation feedback loops.",
+  "license": "MIT",
+  "type": "module",
+  "keywords": [
+    "codex",
+    "frontend",
+    "visual-regression",
+    "playwright",
+    "pixelmatch",
+    "plugin"
+  ],
+  "engines": {
+    "node": ">=22"
+  },
+  "files": [
+    ".codex-plugin/",
+    "skills/",
+    "hooks/",
+    "scripts/",
+    "examples/",
+    ".visual-references/",
+    "visual.config.json",
+    "vite.config.js",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md",
+    "SECURITY.md"
+  ],
+  "scripts": {
+    "dev": "npm run demo:dev",
+    "demo:dev": "vite examples/demo-app --host 127.0.0.1 --port 5173",
+    "example:mockup": "node scripts/generate-example-mockup.js",
+    "visual:capture": "node scripts/capture-page.js",
+    "visual:compare": "node scripts/compare-images.js",
+    "visual:check": "node scripts/visual-check.js",
+    "validate:ui": "node scripts/validate-ui.js",
+    "plugin:validate": "node scripts/validate-plugin.js",
+    "plugin:package": "node scripts/package-plugin.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "dependencies": {
+    "@vitejs/plugin-react": "^5.1.1",
+    "pixelmatch": "^7.1.0",
+    "playwright": "^1.57.0",
+    "react": "^19.2.1",
+    "react-dom": "^19.2.1",
+    "sharp": "^0.34.5",
+    "vite": "^7.2.6"
+  },
+  "devDependencies": {}
+}

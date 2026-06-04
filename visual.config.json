@@ -1,0 +1,80 @@
+{
+  "appCommand": "npm run demo:dev",
+  "url": "http://127.0.0.1:5173",
+  "reference": ".visual-references/home.png",
+  "mask": ".visual-references/home.mask.png",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "target": 97,
+  "finalTarget": 90,
+  "scoreWeights": {
+    "dom": 30,
+    "interactions": 20,
+    "visual": 30,
+    "responsive": 10,
+    "accessibility": 10
+  },
+  "artifactsDir": "artifacts",
+  "actual": "artifacts/actual.png",
+  "diff": "artifacts/diff.png",
+  "report": "artifacts/visual-report.json",
+  "captureTimeoutMs": 30000,
+  "pixelmatchThreshold": 0.1,
+  "scanRoots": [
+    "examples/demo-app/src",
+    "examples/demo-app/public",
+    "public",
+    "src",
+    "app"
+  ],
+  "allowedAssets": [],
+  "forbiddenPatterns": [
+    "mockup",
+    "reference",
+    "screenshot",
+    "data:image"
+  ],
+  "maxImageViewportCoverage": 0.35,
+  "domChecks": [
+    {
+      "role": "heading",
+      "name": "Build frontend UIs that can check themselves",
+      "level": 1
+    },
+    {
+      "role": "button",
+      "name": "Run visual check"
+    },
+    {
+      "role": "link",
+      "name": "View workflow"
+    }
+  ],
+  "interactionChecks": [
+    {
+      "action": "click",
+      "role": "button",
+      "name": "Run visual check",
+      "expect": {
+        "role": "dialog",
+        "name": "Visual check ready"
+      }
+    },
+    {
+      "action": "click",
+      "role": "link",
+      "name": "View workflow",
+      "expect": {
+        "urlContains": "#workflow"
+      }
+    }
+  ],
+  "responsiveViewports": [
+    {
+      "width": 390,
+      "height": 844
+    }
+  ]
+}

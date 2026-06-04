@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright Chromium
+        run: npx playwright install --with-deps chromium
+
+      - name: Run unit tests
+        run: npm test
+
+      - name: Generate example mockup
+        run: npm run example:mockup
+
+      - name: Run UI validation gates
+        run: npm run validate:ui
+
+      - name: Run visual check
+        run: npm run visual:check
+
+      - name: Validate source plugin
+        run: npm run plugin:validate
+
+      - name: Package local marketplace
+        run: npm run plugin:package
+
+      - name: Validate packaged plugin
+        run: npm run plugin:validate -- dist/marketplace/plugins/codex-frontend-plugin
