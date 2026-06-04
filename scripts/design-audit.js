@@ -7,6 +7,11 @@ export async function runDesignAudit(options = {}) {
   return auditDesignSource(await readSourceFiles(config.scanRoots));
 }
 
+export async function runTypographyColorAudit(options = {}) {
+  const config = await loadConfig(options);
+  return auditTypographyColorSource(await readSourceFiles(config.scanRoots));
+}
+
 export function auditDesignSource(files) {
   const source = joinSource(files);
   const issues = [];
@@ -25,11 +30,26 @@ export function auditDesignSource(files) {
     issues.push("Large soft shadows create generic card polish instead of precise hierarchy.");
   }
 
+  return gate("design", issues);
+}
+
+export function auditTypographyColorSource(files) {
+  const source = joinSource(files);
+  const issues = [];
+
   if (/font-family\s*:\s*Inter\b/i.test(source)) {
     issues.push("Inter is used as the default font; consider a more intentional type system.");
   }
 
-  return gate("design", issues);
+  if (/color\s*:\s*#(?:9ca3af|a1a1aa|94a3b8|6b7280)/i.test(source)) {
+    issues.push("Muted gray text may miss contrast or feel like a default generated palette.");
+  }
+
+  if (/background\s*:\s*#(?:f6f4ec|faf7ef|f5f0e6|fff7ed)/i.test(source)) {
+    issues.push("Warm cream backgrounds are common AI defaults; verify this is intentional.");
+  }
+
+  return gate("typographyColor", issues);
 }
 
 function firstFontSize(source, selectorPattern) {

@@ -64,6 +64,7 @@ export async function loadConfig(overrides = {}) {
   merged.captureTimeoutMs = Number(merged.captureTimeoutMs ?? 30000);
   merged.pixelmatchThreshold = Number(merged.pixelmatchThreshold ?? 0.1);
   merged.maxImageViewportCoverage = Number(merged.maxImageViewportCoverage ?? 0.35);
+  merged.mode = merged.mode ?? "exact_mockup";
   merged.viewport = normalizeViewport(merged.viewport);
   merged.responsiveViewports = (merged.responsiveViewports ?? []).map(normalizeViewport);
   merged.scoreWeights = normalizeWeights(merged.scoreWeights);
@@ -73,6 +74,7 @@ export async function loadConfig(overrides = {}) {
   merged.domChecks = merged.domChecks ?? [];
   merged.interactionChecks = merged.interactionChecks ?? [];
   merged.artifactsDir = resolvePath(merged.artifactsDir ?? "artifacts");
+  merged.contract = resolvePath(merged.contract ?? "contracts/home.contract.json");
   merged.reference = resolvePath(merged.reference);
   merged.mask = merged.mask ? resolvePath(merged.mask) : null;
   merged.actual = resolvePath(merged.actual ?? path.join(merged.artifactsDir, "actual.png"));
@@ -109,11 +111,12 @@ export function formatScore(score) {
 
 export function normalizeWeights(weights = {}) {
   return {
-    dom: Number(weights.dom ?? 30),
-    interactions: Number(weights.interactions ?? 20),
     visual: Number(weights.visual ?? 30),
-    responsive: Number(weights.responsive ?? 10),
-    accessibility: Number(weights.accessibility ?? 10)
+    contract: Number(weights.contract ?? 15),
+    typographyColor: Number(weights.typographyColor ?? 15),
+    design: Number(weights.design ?? 15),
+    hallmark: Number(weights.hallmark ?? 15),
+    motion: Number(weights.motion ?? 10)
   };
 }
 

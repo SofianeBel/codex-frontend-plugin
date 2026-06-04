@@ -33,11 +33,8 @@ jobs:
       - name: Generate example mockup
         run: npm run example:mockup
 
-      - name: Run UI validation gates
+      - name: Run full UI quality validation
         run: npm run validate:ui
-
-      - name: Run visual check
-        run: npm run visual:check
 
       - name: Validate source plugin
         run: npm run plugin:validate

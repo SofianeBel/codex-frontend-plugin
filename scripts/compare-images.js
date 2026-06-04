@@ -1,4 +1,5 @@
 import { pathToFileURL } from "node:url";
+import path from "node:path";
 import pixelmatch from "pixelmatch";
 import sharp from "sharp";
 import { ensureDir, formatScore, loadConfig, parseArgs, pathExists, writeJson } from "./lib/config.js";
@@ -6,6 +7,8 @@ import { ensureDir, formatScore, loadConfig, parseArgs, pathExists, writeJson } 
 export async function compareImages(options = {}) {
   const config = await loadConfig(options);
   await ensureDir(config.artifactsDir);
+  await ensureDir(path.dirname(config.diff));
+  await ensureDir(path.dirname(config.report));
 
   const reference = await readRgba(config.reference);
   const actualOriginal = await sharp(config.actual).metadata();

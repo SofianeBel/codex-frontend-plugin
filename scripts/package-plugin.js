@@ -14,10 +14,13 @@ const copyEntries = [
   "scripts",
   "examples",
   ".visual-references",
+  "contracts",
   "visual.config.json",
   "package.json",
   "README.md",
+  "AGENTS.md",
   "LICENSE",
+  "THIRD_PARTY_NOTICES.md",
   "CHANGELOG.md",
   "SECURITY.md",
   "vite.config.js"

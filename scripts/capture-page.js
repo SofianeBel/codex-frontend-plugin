@@ -1,4 +1,5 @@
 import { chromium } from "playwright";
+import path from "node:path";
 import { pathToFileURL } from "node:url";
 import { ensureDir, loadConfig, parseArgs, runCommand, stopProcessTree, waitForUrl } from "./lib/config.js";
 
@@ -7,6 +8,7 @@ export async function capturePage(options = {}) {
   let child;
 
   await ensureDir(config.artifactsDir);
+  await ensureDir(path.dirname(config.actual));
 
   try {
     try {

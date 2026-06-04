@@ -1,0 +1,59 @@
+{
+  "screen": "home",
+  "route": "/",
+  "mode": "exact_mockup",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "reference": ".visual-references/home.png",
+  "regions": [
+    {
+      "id": "hero-title",
+      "type": "text",
+      "role": "heading",
+      "name": "Build frontend UIs that can check themselves",
+      "bounds": {
+        "x": 72,
+        "y": 145,
+        "w": 720,
+        "h": 212
+      }
+    },
+    {
+      "id": "primary-cta",
+      "type": "button",
+      "role": "button",
+      "name": "Run visual check",
+      "bounds": {
+        "x": 72,
+        "y": 491,
+        "w": 178,
+        "h": 54
+      }
+    },
+    {
+      "id": "report-card",
+      "type": "region",
+      "selector": "#report",
+      "bounds": {
+        "x": 938,
+        "y": 189,
+        "w": 430,
+        "h": 270
+      }
+    },
+    {
+      "id": "workflow",
+      "type": "region",
+      "role": "region",
+      "name": "Workflow",
+      "bounds": {
+        "x": 72,
+        "y": 638,
+        "w": 1296,
+        "h": 177
+      }
+    }
+  ]
+}

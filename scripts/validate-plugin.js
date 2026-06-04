@@ -25,9 +25,15 @@ async function validatePlugin(root) {
 
   await requirePath(path.join(root, manifest.skills ?? "skills"), "skills directory", errors);
   await requirePath(path.join(root, "skills", "frontend-mockup", "SKILL.md"), "frontend-mockup skill", errors);
+  await requirePath(path.join(root, "skills", "design-quality", "SKILL.md"), "design-quality skill", errors);
+  await requirePath(path.join(root, "skills", "anti-ai-slop", "SKILL.md"), "anti-ai-slop skill", errors);
+  await requirePath(path.join(root, "skills", "motion-quality", "SKILL.md"), "motion-quality skill", errors);
   await requirePath(path.join(root, "hooks", "hooks.json"), "advisory hook config", errors);
   await requirePath(path.join(root, "scripts", "visual-check.js"), "visual check script", errors);
+  await requirePath(path.join(root, "scripts", "final-score.js"), "final score script", errors);
+  await requirePath(path.join(root, "contracts", "home.contract.json"), "home design contract", errors);
   await requirePath(path.join(root, ".visual-references", "home.png"), "visual reference mockup", errors);
+  await requirePath(path.join(root, "THIRD_PARTY_NOTICES.md"), "third-party notices", errors);
 
   const hooks = await readJson(path.join(root, "hooks", "hooks.json"));
   if (!hooks.hooks?.Stop?.[0]?.hooks?.[0]?.command) {

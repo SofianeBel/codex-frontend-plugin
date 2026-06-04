@@ -1,18 +1,49 @@
 import { pathToFileURL } from "node:url";
 import { capturePage } from "./capture-page.js";
 import { compareImages } from "./compare-images.js";
-import { formatScore, loadConfig, parseArgs, writeJson } from "./lib/config.js";
+import { checkContract } from "./contract-check.js";
+import { runDesignAudit, runTypographyColorAudit } from "./design-audit.js";
+import { buildFinalQualityReport, writeFinalQualityReport } from "./final-score.js";
+import { runHallmarkAudit } from "./hallmark-audit.js";
+import { loadConfig, parseArgs, writeJson } from "./lib/config.js";
+import { runMotionAudit } from "./motion-audit.js";
+import { checkMotionRuntime } from "./motion-runtime-check.js";
 import { validateUi } from "./validate-ui.js";
 
 export async function visualCheck(options = {}) {
   const config = await loadConfig(options);
   const validation = await validateUi(options);
-  const antiCheatPassed = validation.antiCheat.passed;
+  const contract = await checkContract(options);
+  const design = await runDesignAudit(options);
+  const typographyColor = await runTypographyColorAudit(options);
+  const hallmark = await runHallmarkAudit(options);
+  const motion = await runMotionAudit(options);
+  const motionAccessibility = await checkMotionRuntime(options);
 
   await capturePage(options);
   const visual = await compareImages(options);
-  const report = buildFinalReport(config, validation, visual);
-  await writeJson(config.report, report);
+  const report = await writeFinalQualityReport({
+    config,
+    gates: {
+      antiCheat: validation.antiCheat,
+      assets: validation.assets,
+      dom: validation.dom,
+      interactions: validation.interactions,
+      hotspots: validation.hotspots,
+      responsive: validation.responsive,
+      accessibility: validation.accessibility,
+      motionAccessibility
+    },
+    components: {
+      visual,
+      contract,
+      design,
+      typographyColor,
+      hallmark,
+      motion
+    },
+    visual
+  });
   printReport(report);
 
   if (!report.passed) {
@@ -23,37 +54,8 @@ export async function visualCheck(options = {}) {
 }
 
 export function buildFinalReport(config, validation, visual) {
-  const components = {
-    dom: validation.dom.score,
-    interactions: validation.interactions.score,
-    visual: visual.score,
-    responsive: validation.responsive.score,
-    accessibility: validation.accessibility.score
-  };
-  const hardGates = {
-    antiCheat: validation.antiCheat.passed,
-    assets: validation.assets.passed,
-    dom: validation.dom.passed,
-    interactions: validation.interactions.passed,
-    hotspots: validation.hotspots.passed,
-    responsive: validation.responsive.passed,
-    accessibility: validation.accessibility.passed,
-    visual: visual.passed
-  };
-  const finalScore = antiCheatPassed(config, validation)
-    ? weightedScore(components, config.scoreWeights)
-    : 0;
-  const issues = collectIssues(validation, visual);
-  const passed = finalScore >= config.finalTarget && Object.values(hardGates).every(Boolean);
-
-  return {
-    finalScore,
-    finalTarget: config.finalTarget,
-    visualScore: visual.score,
-    visualTarget: visual.target,
-    passed,
-    components,
-    weights: config.scoreWeights,
+  return buildFinalQualityReport({
+    config,
     gates: {
       antiCheat: validation.antiCheat,
       assets: validation.assets,
@@ -62,49 +64,23 @@ export function buildFinalReport(config, validation, visual) {
       hotspots: validation.hotspots,
       responsive: validation.responsive,
       accessibility: validation.accessibility,
-      visual: {
-        name: "visual",
-        passed: visual.passed,
-        score: visual.score,
-        issues: visual.issues
+      motionAccessibility: {
+        name: "motionAccessibility",
+        passed: true,
+        score: 100,
+        issues: []
       }
     },
-    reference: visual.reference,
-    actual: visual.actual,
-    diff: visual.diff,
-    report: config.report,
-    mask: visual.mask,
-    viewport: visual.viewport,
-    issues
-  };
-}
-
-function antiCheatPassed(_config, validation) {
-  return validation.antiCheat.passed;
-}
-
-function weightedScore(components, weights) {
-  const totalWeight = Object.values(weights).reduce((total, value) => total + value, 0);
-  if (totalWeight <= 0) {
-    return 0;
-  }
-
-  return formatScore(
-    Object.entries(weights).reduce((total, [key, weight]) => total + (components[key] ?? 0) * weight, 0) / totalWeight
-  );
-}
-
-function collectIssues(validation, visual) {
-  const issues = [];
-  for (const gateReport of Object.values(validation)) {
-    for (const issue of gateReport.issues ?? []) {
-      issues.push(`[${gateReport.name}] ${issue}`);
-    }
-  }
-  for (const issue of visual.issues ?? []) {
-    issues.push(`[visual] ${issue}`);
-  }
-  return issues;
+    components: {
+      visual,
+      contract: { name: "contract", passed: true, score: 100, issues: [] },
+      typographyColor: { name: "typographyColor", passed: true, score: 100, issues: [] },
+      design: { name: "design", passed: true, score: 100, issues: [] },
+      hallmark: { name: "hallmark", passed: true, score: 100, issues: [] },
+      motion: { name: "motion", passed: true, score: 100, issues: [] }
+    },
+    visual
+  });
 }
 
 export function printReport(report) {

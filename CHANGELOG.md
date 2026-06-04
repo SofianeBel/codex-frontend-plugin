@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.0 - 2026-06-04
+
+- Added deterministic design quality, anti-AI-slop, motion quality, and design-contract validation layers.
+- Added `design-quality`, `anti-ai-slop`, and `motion-quality` plugin skills with self-contained references and third-party attribution.
+- Added contract, design, hallmark, motion, motion runtime, and final-score scripts.
+- Updated `validate:ui` to produce the full composite quality report.
+- Moved generated screenshots, diffs, and reports into structured artifact subdirectories.
+
 ## 0.2.2 - 2026-06-04
 
 - Made release ZIP installation the primary marketplace path.

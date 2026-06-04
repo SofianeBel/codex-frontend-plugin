@@ -1,11 +1,11 @@
 # Codex Frontend Visual Plugin
 
-Prototype Codex plugin and tooling for frontend implementation with visual feedback and anti-cheat validation.
+Prototype Codex plugin and tooling for frontend implementation with visual feedback, anti-cheat validation, design quality checks, anti-AI-slop checks, motion quality checks, and design contracts.
 
 The MVP loop is:
 
 1. Build or edit a frontend UI from a mockup.
-2. Run anti-cheat, asset policy, DOM, interaction, responsive, and accessibility gates.
+2. Run anti-cheat, asset policy, DOM, interaction, responsive, accessibility, design, anti-slop, motion, and contract gates.
 3. Launch the local app.
 4. Capture a Playwright screenshot.
 5. Compare it with the reference image using `pixelmatch`.
@@ -35,6 +35,11 @@ npm run dev
 npm run example:mockup
 npm run validate:ui
 npm run visual:check
+npm run contract:check
+npm run design:audit
+npm run hallmark:audit
+npm run motion:audit
+npm run motion:runtime
 npm run plugin:validate
 npm run plugin:package
 npm test
@@ -42,11 +47,13 @@ npm test
 
 Artifacts are written to `artifacts/`:
 
-- `actual.png`
-- `diff.png`
-- `visual-report.json`
+- `screenshots/actual.png`
+- `diffs/diff.png`
+- `reports/visual-report.json`
 
 Reference mockups live in `.visual-references/`, not in `public`, `src`, or app assets. The frontend app must never import or serve those files.
+
+Design contracts live in `contracts/`. The default `contracts/home.contract.json` checks key semantic regions against measured bounds. Use `mode: "exact_mockup"` for faithful reproduction and `mode: "design_dna"` when the reference is inspirational rather than exact.
 
 ## Anti-Cheat Rules
 
@@ -64,15 +71,32 @@ Blocked shortcuts include:
 
 If anti-cheat fails, `finalScore` is forced to `0`.
 
+## Quality Scoring
+
+Hard gates include anti-cheat, asset policy, real DOM, interactions, accessibility, and reduced-motion safety. Anti-cheat or real-DOM failure sets `finalScore` to `0`; interaction failure caps it at `70`; severe anti-AI-slop or motion accessibility failures prevent pass.
+
+Weighted score components:
+
+- visual fidelity: 30%
+- layout / contract precision: 15%
+- typography / color precision: 15%
+- design quality: 15%
+- anti-AI-slop: 15%
+- motion quality: 10%
+
 ## Plugin Contents
 
 - `.codex-plugin/plugin.json`: plugin metadata
 - `skills/frontend-mockup/SKILL.md`: Codex skill for mockup implementation
+- `skills/design-quality/SKILL.md`: design polish audit guidance
+- `skills/anti-ai-slop/SKILL.md`: generic AI UI fingerprint checks
+- `skills/motion-quality/SKILL.md`: purposeful and accessible motion guidance
 - `hooks/hooks.json`: advisory hook config
 - `scripts/`: capture, compare, and orchestration scripts
+- `contracts/`: region-level design contracts
 - `examples/demo-app`: small Vite/React target used by the MVP
 
-The hook is advisory by default. Set `CODEX_VISUAL_HOOK_STRICT=1` only when hook behavior is verified in the current Codex surface.
+The hook is advisory by default. Set `CODEX_VISUAL_HOOK_STRICT=1` only when hook behavior is verified in the current Codex surface. See `THIRD_PARTY_NOTICES.md` for upstream design-skill attribution.
 
 ## Validation
 
@@ -80,9 +104,8 @@ The CI workflow runs:
 
 ```powershell
 npm test
-npm run validate:ui
 npm run example:mockup
-npm run visual:check
+npm run validate:ui
 npm run plugin:validate
 npm run plugin:package
 npm run plugin:validate -- dist/marketplace/plugins/codex-frontend-plugin

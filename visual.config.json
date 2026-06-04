@@ -7,19 +7,22 @@
     "width": 1440,
     "height": 900
   },
+  "mode": "exact_mockup",
+  "contract": "contracts/home.contract.json",
   "target": 97,
   "finalTarget": 90,
   "scoreWeights": {
-    "dom": 30,
-    "interactions": 20,
     "visual": 30,
-    "responsive": 10,
-    "accessibility": 10
+    "contract": 15,
+    "typographyColor": 15,
+    "design": 15,
+    "hallmark": 15,
+    "motion": 10
   },
   "artifactsDir": "artifacts",
-  "actual": "artifacts/actual.png",
-  "diff": "artifacts/diff.png",
-  "report": "artifacts/visual-report.json",
+  "actual": "artifacts/screenshots/actual.png",
+  "diff": "artifacts/diffs/diff.png",
+  "report": "artifacts/reports/visual-report.json",
   "captureTimeoutMs": 30000,
   "pixelmatchThreshold": 0.1,
   "scanRoots": [
