@@ -1,6 +1,6 @@
 ---
 name: design-quality
-description: Audit and improve frontend design quality beyond screenshot similarity: typography, spacing, color, layout, responsive behavior, UX copy, and component polish.
+description: "Audit and improve frontend design quality beyond screenshot similarity: typography, spacing, color, layout, responsive behavior, UX copy, and component polish."
 ---
 
 # Design Quality

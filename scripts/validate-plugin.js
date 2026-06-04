@@ -28,6 +28,7 @@ async function validatePlugin(root) {
   await requirePath(path.join(root, "skills", "design-quality", "SKILL.md"), "design-quality skill", errors);
   await requirePath(path.join(root, "skills", "anti-ai-slop", "SKILL.md"), "anti-ai-slop skill", errors);
   await requirePath(path.join(root, "skills", "motion-quality", "SKILL.md"), "motion-quality skill", errors);
+  await validateSkillFrontmatter(path.join(root, manifest.skills ?? "skills"), errors);
   await requirePath(path.join(root, "hooks", "hooks.json"), "advisory hook config", errors);
   await requirePath(path.join(root, "scripts", "visual-check.js"), "visual check script", errors);
   await requirePath(path.join(root, "scripts", "final-score.js"), "final score script", errors);
@@ -61,6 +62,62 @@ async function requirePath(targetPath, label, errors) {
   }
 }
 
+async function validateSkillFrontmatter(skillsRoot, errors) {
+  let entries;
+  try {
+    entries = await fs.readdir(skillsRoot, { withFileTypes: true });
+  } catch {
+    return;
+  }
+
+  for (const entry of entries) {
+    if (!entry.isDirectory()) {
+      continue;
+    }
+
+    const skillPath = path.join(skillsRoot, entry.name, "SKILL.md");
+    try {
+      validateSkillFrontmatterText(await fs.readFile(skillPath, "utf8"), skillPath);
+    } catch (error) {
+      errors.push(error.message);
+    }
+  }
+}
+
+function validateSkillFrontmatterText(content, skillPath = "SKILL.md") {
+  const match = content.match(/^---\r?\n([\s\S]*?)\r?\n---/);
+  if (!match) {
+    throw new Error(`invalid skill frontmatter in ${skillPath}: missing YAML block`);
+  }
+
+  const frontmatter = match[1].split(/\r?\n/);
+  for (const line of frontmatter) {
+    const trimmed = line.trim();
+    if (trimmed === "" || trimmed.startsWith("#")) {
+      continue;
+    }
+
+    const separator = trimmed.indexOf(":");
+    if (separator <= 0) {
+      throw new Error(`invalid skill frontmatter in ${skillPath}: expected key: value`);
+    }
+
+    const key = trimmed.slice(0, separator).trim();
+    const value = trimmed.slice(separator + 1).trim();
+    if (!["name", "description", "license", "allowed-tools", "metadata"].includes(key)) {
+      throw new Error(`invalid skill frontmatter in ${skillPath}: unsupported key ${key}`);
+    }
+    if (value === "") {
+      throw new Error(`invalid skill frontmatter in ${skillPath}: missing value for ${key}`);
+    }
+
+    const quoted = (value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"));
+    if (!quoted && /:\s/.test(value)) {
+      throw new Error(`invalid skill frontmatter in ${skillPath}: quote ${key} when it contains a colon`);
+    }
+  }
+}
+
 if (import.meta.url === pathToFileURL(process.argv[1]).href) {
   validatePlugin(pluginPath)
     .then((name) => {
@@ -72,4 +129,4 @@ if (import.meta.url === pathToFileURL(process.argv[1]).href) {
     });
 }
 
-export { validatePlugin };
+export { validatePlugin, validateSkillFrontmatterText };

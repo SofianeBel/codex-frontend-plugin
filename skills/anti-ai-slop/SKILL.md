@@ -1,6 +1,6 @@
 ---
 name: anti-ai-slop
-description: Detect and remove generic AI-generated UI fingerprints such as templated SaaS structure, fake chrome, invented metrics, and repeated card rhythms.
+description: "Detect and remove generic AI-generated UI fingerprints such as templated SaaS structure, fake chrome, invented metrics, and repeated card rhythms."
 ---
 
 # Anti-AI-Slop

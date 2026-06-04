@@ -1,6 +1,6 @@
 ---
 name: motion-quality
-description: Audit and improve UI motion so animations are purposeful, subtle, accessible, performant, and not generic AI-generated decoration.
+description: "Audit and improve UI motion so animations are purposeful, subtle, accessible, performant, and not generic AI-generated decoration."
 ---
 
 # Motion Quality

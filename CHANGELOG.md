@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.2 - 2026-06-04
+
+- Fixed invalid YAML in quality skill frontmatter by quoting descriptions containing colons.
+- Added skill frontmatter validation to `npm run plugin:validate`.
+- Added regression tests for skill descriptions with colon text.
+
 ## 0.3.1 - 2026-06-04
 
 - Added a repo-scoped Codex marketplace at `.agents/plugins/marketplace.json`.
