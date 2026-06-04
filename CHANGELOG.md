@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.1 - 2026-06-04
+
+- Added a repo-scoped Codex marketplace at `.agents/plugins/marketplace.json`.
+- Documented GitHub repo marketplace installation as the primary install path.
+- Added marketplace validation for the source repo and packaged marketplace layout.
+
 ## 0.3.0 - 2026-06-04
 
 - Added deterministic design quality, anti-AI-slop, motion quality, and design-contract validation layers.

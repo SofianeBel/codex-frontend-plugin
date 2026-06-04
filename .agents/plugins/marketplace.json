@@ -1,0 +1,20 @@
+{
+  "name": "codex-frontend-visual",
+  "interface": {
+    "displayName": "Codex Frontend Visual"
+  },
+  "plugins": [
+    {
+      "name": "codex-frontend-plugin",
+      "source": {
+        "source": "local",
+        "path": "./"
+      },
+      "policy": {
+        "installation": "AVAILABLE",
+        "authentication": "ON_INSTALL"
+      },
+      "category": "Developer Tools"
+    }
+  ]
+}

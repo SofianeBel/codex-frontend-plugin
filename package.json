@@ -1,6 +1,6 @@
 {
   "name": "codex-frontend-plugin",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Codex plugin prototype for anti-cheat visual frontend implementation feedback loops.",
   "license": "MIT",
   "type": "module",
@@ -17,6 +17,7 @@
   },
   "files": [
     ".codex-plugin/",
+    ".agents/",
     "skills/",
     "hooks/",
     "scripts/",
@@ -47,6 +48,7 @@
     "motion:runtime": "node scripts/motion-runtime-check.js",
     "score:final": "node scripts/final-score.js",
     "plugin:validate": "node scripts/validate-plugin.js",
+    "marketplace:validate": "node scripts/validate-marketplace.js",
     "plugin:package": "node scripts/package-plugin.js",
     "test": "node --test tests/*.test.js"
   },

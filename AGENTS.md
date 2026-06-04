@@ -16,6 +16,7 @@ Use Node `>=22`.
 - `npm run contract:check`: validate configured design-contract regions.
 - `npm run design:audit`, `npm run hallmark:audit`, `npm run motion:audit`: run focused deterministic quality audits.
 - `npm run plugin:validate`: validate plugin structure.
+- `npm run marketplace:validate`: validate the repo-scoped marketplace catalog.
 - `npm run plugin:package`: build the local marketplace layout in `dist/marketplace`.
 
 ## Coding Style & Naming Conventions
@@ -24,7 +25,7 @@ Use ESM JavaScript (`import`/`export`) and 2-space indentation. Prefer small scr
 
 ## Testing Guidelines
 
-Tests use the built-in Node test runner. Name tests `*.test.js` and keep them focused on one behavior or gate. Before opening a PR, run `npm test`, `npm run example:mockup`, `npm run validate:ui`, `npm run plugin:validate`, `npm run plugin:package`, and `npm run plugin:validate -- dist/marketplace/plugins/codex-frontend-plugin`.
+Tests use the built-in Node test runner. Name tests `*.test.js` and keep them focused on one behavior or gate. Before opening a PR, run `npm test`, `npm run example:mockup`, `npm run validate:ui`, `npm run plugin:validate`, `npm run marketplace:validate`, `npm run plugin:package`, `npm run marketplace:validate -- dist/marketplace`, and `npm run plugin:validate -- dist/marketplace/plugins/codex-frontend-plugin`.
 
 ## Commit & Pull Request Guidelines
 
@@ -32,4 +33,4 @@ Recent commits use short imperative subjects, for example `Rename marketplace so
 
 ## Security & Configuration Tips
 
-Do not commit `.env`, local logs, `node_modules/`, `dist/`, or generated `artifacts/*`. Keep marketplace install instructions release-ZIP first; users should not need to clone the repo for normal plugin installation. Branch protection requires PR review and the `validate` status check on `main`.
+Do not commit `.env`, local logs, `node_modules/`, `dist/`, or generated `artifacts/*`. Keep repo marketplace install instructions first; users should not need to clone the repo for normal plugin installation. Branch protection requires PR review and the `validate` status check on `main`.

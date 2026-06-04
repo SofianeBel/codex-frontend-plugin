@@ -11,9 +11,20 @@ The MVP loop is:
 5. Compare it with the reference image using `pixelmatch`.
 6. Write a final composite score, diff image, and JSON report for Codex to use in the next pass.
 
+## Install From Repo Marketplace
+
+You do not need to clone this repo or run `npm install`. Add the GitHub repo marketplace, then install the plugin from that marketplace:
+
+```powershell
+codex plugin marketplace add SofianeBel/codex-frontend-plugin --ref main
+codex plugin add codex-frontend-plugin@codex-frontend-visual
+```
+
+The repo-scoped marketplace lives at `.agents/plugins/marketplace.json` and points Codex at this repository root as the plugin folder.
+
 ## Install From Marketplace Release
 
-You do not need to clone this repo or run `npm install` to install the packaged plugin.
+The release ZIP is the pinned, downloadable marketplace package.
 
 1. Download `codex-frontend-plugin-marketplace.zip` from the latest GitHub Release.
 2. Extract the ZIP.
@@ -41,6 +52,7 @@ npm run hallmark:audit
 npm run motion:audit
 npm run motion:runtime
 npm run plugin:validate
+npm run marketplace:validate
 npm run plugin:package
 npm test
 ```
@@ -107,7 +119,9 @@ npm test
 npm run example:mockup
 npm run validate:ui
 npm run plugin:validate
+npm run marketplace:validate
 npm run plugin:package
+npm run marketplace:validate -- dist/marketplace
 npm run plugin:validate -- dist/marketplace/plugins/codex-frontend-plugin
 ```
 

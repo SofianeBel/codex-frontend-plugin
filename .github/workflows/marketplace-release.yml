@@ -41,8 +41,14 @@ jobs:
       - name: Validate source plugin
         run: npm run plugin:validate
 
+      - name: Validate source marketplace
+        run: npm run marketplace:validate
+
       - name: Package local marketplace
         run: npm run plugin:package
+
+      - name: Validate packaged marketplace
+        run: npm run marketplace:validate -- dist/marketplace
 
       - name: Validate packaged plugin
         run: npm run plugin:validate -- dist/marketplace/plugins/codex-frontend-plugin
