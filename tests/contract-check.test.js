@@ -14,13 +14,15 @@ test("normalizeContract applies exact mockup mode and per-region tolerance defau
         type: "text",
         role: "heading",
         name: "Build better apps",
-        bounds: { x: 120, y: 210, w: 620, h: 160 }
+        bounds: { x: 120, y: 210, w: 620, h: 160 },
+        tolerance: { y: 48 }
       }
     ]
   });
 
   assert.equal(contract.mode, "exact_mockup");
   assert.equal(contract.regions[0].tolerance.x, 8);
+  assert.equal(contract.regions[0].tolerance.y, 48);
   assert.equal(contract.regions[0].tolerance.w, 6);
 });
 
