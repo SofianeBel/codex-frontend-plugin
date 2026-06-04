@@ -122,7 +122,8 @@ export function runCommand(command, cwd = projectRoot) {
     cwd,
     shell: true,
     stdio: ["ignore", "pipe", "pipe"],
-    windowsHide: true
+    windowsHide: true,
+    detached: process.platform !== "win32"
   });
 
   child.stdout.on("data", (chunk) => {
@@ -152,7 +153,23 @@ export async function stopProcessTree(child) {
     return;
   }
 
-  child.kill("SIGTERM");
+  await new Promise((resolve) => {
+    const timeout = setTimeout(resolve, 3000);
+    child.once("close", () => {
+      clearTimeout(timeout);
+      resolve();
+    });
+    child.once("error", () => {
+      clearTimeout(timeout);
+      resolve();
+    });
+
+    try {
+      process.kill(-child.pid, "SIGTERM");
+    } catch {
+      child.kill("SIGTERM");
+    }
+  });
 }
 
 export async function waitForUrl(url, timeoutMs = 30000) {
