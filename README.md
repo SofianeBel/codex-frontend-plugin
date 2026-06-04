@@ -80,7 +80,7 @@ To install it later:
 
 ```powershell
 codex plugin marketplace add .\dist\marketplace
-codex plugin add codex-frontend-plugin@codex-frontend-local
+codex plugin add codex-frontend-plugin@codex-frontend-visual
 ```
 
 The GitHub release pipeline builds the same marketplace layout and archives it as `codex-frontend-plugin-marketplace.zip`. After downloading a release artifact, extract it and add the extracted marketplace directory:
@@ -88,7 +88,7 @@ The GitHub release pipeline builds the same marketplace layout and archives it a
 ```powershell
 Expand-Archive .\codex-frontend-plugin-marketplace.zip .\codex-frontend-plugin-marketplace
 codex plugin marketplace add .\codex-frontend-plugin-marketplace
-codex plugin add codex-frontend-plugin@codex-frontend-local
+codex plugin add codex-frontend-plugin@codex-frontend-visual
 ```
 
 Release tags named `v*.*.*` publish the marketplace archive to GitHub Releases. The same workflow can also be run manually from GitHub Actions to validate and download the package without creating a release.

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.1 - 2026-06-04
+
+- Renamed the packaged marketplace source from `codex-frontend-local` to `codex-frontend-visual`.
+- Updated marketplace install documentation to use the public release source name.
+
 ## 0.2.0 - 2026-06-04
 
 - Added GitHub Actions marketplace release packaging.

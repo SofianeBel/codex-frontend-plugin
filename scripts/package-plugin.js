@@ -3,7 +3,7 @@ import path from "node:path";
 import { projectRoot, writeJson } from "./lib/config.js";
 
 const pluginName = "codex-frontend-plugin";
-const marketplaceName = "codex-frontend-local";
+const marketplaceName = "codex-frontend-visual";
 const distRoot = path.join(projectRoot, "dist", "marketplace");
 const pluginRoot = path.join(distRoot, "plugins", pluginName);
 const marketplacePath = path.join(distRoot, ".agents", "plugins", "marketplace.json");
@@ -37,7 +37,7 @@ for (const entry of copyEntries) {
 await writeJson(marketplacePath, {
   name: marketplaceName,
   interface: {
-    displayName: "Codex Frontend Local"
+    displayName: "Codex Frontend Visual"
   },
   plugins: [
     {
