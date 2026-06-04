@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.2.2 - 2026-06-04
+
+- Made release ZIP installation the primary marketplace path.
+- Clarified that marketplace users do not need to clone the repo or run `npm install`.
+
 ## 0.2.1 - 2026-06-04
 
 - Renamed the packaged marketplace source from `codex-frontend-local` to `codex-frontend-visual`.

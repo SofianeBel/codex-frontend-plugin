@@ -11,7 +11,23 @@ The MVP loop is:
 5. Compare it with the reference image using `pixelmatch`.
 6. Write a final composite score, diff image, and JSON report for Codex to use in the next pass.
 
-## Commands
+## Install From Marketplace Release
+
+You do not need to clone this repo or run `npm install` to install the packaged plugin.
+
+1. Download `codex-frontend-plugin-marketplace.zip` from the latest GitHub Release.
+2. Extract the ZIP.
+3. Add the extracted marketplace directory and install the plugin:
+
+```powershell
+Expand-Archive .\codex-frontend-plugin-marketplace.zip .\codex-frontend-plugin-marketplace
+codex plugin marketplace add .\codex-frontend-plugin-marketplace
+codex plugin add codex-frontend-plugin@codex-frontend-visual
+```
+
+Release tags named `v*.*.*` publish the marketplace archive to GitHub Releases.
+
+## Development Commands
 
 ```powershell
 npm install
@@ -72,23 +88,15 @@ npm run plugin:package
 npm run plugin:validate -- dist/marketplace/plugins/codex-frontend-plugin
 ```
 
-## Marketplace Package
+## Local Marketplace Package
 
-Run `npm run plugin:package` to create an installable local marketplace layout under `dist/marketplace`.
+For development, run `npm run plugin:package` to create an installable local marketplace layout under `dist/marketplace`.
 
-To install it later:
+To install that local development build:
 
 ```powershell
 codex plugin marketplace add .\dist\marketplace
 codex plugin add codex-frontend-plugin@codex-frontend-visual
 ```
 
-The GitHub release pipeline builds the same marketplace layout and archives it as `codex-frontend-plugin-marketplace.zip`. After downloading a release artifact, extract it and add the extracted marketplace directory:
-
-```powershell
-Expand-Archive .\codex-frontend-plugin-marketplace.zip .\codex-frontend-plugin-marketplace
-codex plugin marketplace add .\codex-frontend-plugin-marketplace
-codex plugin add codex-frontend-plugin@codex-frontend-visual
-```
-
-Release tags named `v*.*.*` publish the marketplace archive to GitHub Releases. The same workflow can also be run manually from GitHub Actions to validate and download the package without creating a release.
+The Marketplace Release workflow can also be run manually from GitHub Actions to validate and download the package without creating a release.
