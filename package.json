@@ -1,6 +1,6 @@
 {
   "name": "codex-frontend-plugin",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "description": "Codex plugin prototype for anti-cheat visual frontend implementation feedback loops.",
   "license": "MIT",
   "type": "module",

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.3.3 - 2026-06-04
+
+- Fixed the advisory hook so it does not statically import Playwright-dependent modules from the plugin cache.
+- Resolved visual checks from the active workspace before falling back to plugin-bundled scripts.
+- Added hook regression tests for missing workspace config and cache installs without `node_modules`.
+
 ## 0.3.2 - 2026-06-04
 
 - Fixed invalid YAML in quality skill frontmatter by quoting descriptions containing colons.
